@@ -1,11 +1,15 @@
 package exercise;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.junit.Test;		
 
@@ -36,7 +40,10 @@ public class ExerciseLambda {
     @Test
     public void printAllWords() {
         // TODO
-    	fail();
+    	//listOfWords.forEach(s -> System.out.println(s));
+    	listOfWords.forEach(System.out::println);
+    	
+    	assert(true);
     }
     
     /*
@@ -45,25 +52,34 @@ public class ExerciseLambda {
 	 */
 	@Test
 	public void stringOfFirstLetterFromEveryWord() {
-		// String result;
-		// TODO assertEquals("epicscbsbaaloietmloi", result);
-		fail();
+		
+		StringBuilder sb = new StringBuilder();
+		
+		List<Character> list = listOfWords.stream().map(s -> s.charAt(0)).collect(Collectors.toList());
+		
+		list.forEach(s -> sb.append(s));
+		
+		String result = sb.toString();
+		
+		assertEquals("epicscbsbaaloietmloi", result);
+		
+		System.out.println("Result:" + result);
+
 	}
     
     // Exercise 2: Convert all words in wordList to upper case
     @Test
     public void makeUpperCase() {
-        
-        // TODO
-    	/*
+     	List<String> output = listOfWords.stream().map(String::toUpperCase).collect(Collectors.toList());
+    	
+    	System.out.println(output);
+    	
     	assertEquals( Arrays.asList(
                 "EVERY", "PROBLEM", "IN", "COMPUTER", "SCIENCE",
                 "CAN", "BE", "SOLVED", "BY", "ADDING", "ANOTHER",
                 "LEVEL", "OF", "INDIRECTION", "EXCEPT", "TOO",
                 "MANY", "LEVELS", "OF", "INDIRECTION"), output );
-        */
-        fail();
-    
+    	    
     }
     
     /*
@@ -71,8 +87,13 @@ public class ExerciseLambda {
      */
     @Test
     public void findEvenLengthWords() {
-        // TODO assertEquals(Arrays.asList("in", "computer", "be", "solved", "by", "adding", "of", "except", "many", "levels", "of"), output);
-    	fail();
+    	
+    	List<String> output = listOfWords.stream().filter(s -> s.length()%2==0).collect(Collectors.toList());
+    	
+    	System.out.println(output);
+    	    	
+        assertEquals(Arrays.asList("in", "computer", "be", "solved", "by", "adding", "of", "except", "many", "levels", "of"), output);
+
     }
 
     /*
@@ -80,8 +101,10 @@ public class ExerciseLambda {
      */
     @Test
     public void countNumberOfWords() {
-        // TODO assertEquals(20, count);
-    	fail();
+
+    	long count = listOfWords.stream().count();	
+        assertEquals(20, count);
+    	
     }
 
     /*
@@ -89,8 +112,11 @@ public class ExerciseLambda {
      */
     @Test
     public void countNumberOfCharactersInWords() {
-        // TODO assertEquals(105, count);
-    	fail();
+ 
+    	long count = 0L;
+    	count = listOfWords.stream().mapToLong(s -> s.length()).sum();
+    	System.out.println(count);
+    	assertEquals(105, count);
     }
 
     /*
