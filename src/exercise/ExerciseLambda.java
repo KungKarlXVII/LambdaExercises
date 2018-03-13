@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.Test;		
 
@@ -126,9 +127,9 @@ public class ExerciseLambda {
     public void findFirstSquareThatIsDivisibleBy5() {
         // HINT: IntStream.range(1, 100) creates a stream 1, 2, ... 99
         // final int first = 0; // TODO
-
-
-        // TODO assertEquals(25, first);
+    	//Long first = IntStream.range(1, 100).formapToLong(s -);
+    	
+    	
     	fail();
     }
     
@@ -143,8 +144,15 @@ public class ExerciseLambda {
     			"The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog");
 
     	String merged;
-    	// TODO assertEquals("quick-brown-fox", merged);
-    	fail();
+    	
+    	StringBuilder sb = new StringBuilder();
+    	
+    	merged = list.stream().skip(1).limit(3).collect(Collectors.joining("-"));
+    	
+    	assertEquals("quick-brown-fox", merged);
+    	
+    	System.out.println(merged);
+
     }
     
     
@@ -159,6 +167,14 @@ public class ExerciseLambda {
 	    map.put("c", 3);
 	    map.put("b", 2);
 	    map.put("a", 1);
+	    
+	    StringBuilder sb = new StringBuilder();
+	    
+	    map.forEach((k,v) -> {
+	    	sb.append(k);
+	    	sb.append(v);	    	
+	    	}
+	    );
 	    
 	    // TODO assertEquals("a1b2c3", sb.toString());
 	    fail();
