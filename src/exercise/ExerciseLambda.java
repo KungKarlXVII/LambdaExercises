@@ -7,6 +7,7 @@ import static org.junit.Assert.fail;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalInt;
 import java.util.TreeMap;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -40,8 +41,7 @@ public class ExerciseLambda {
 	 */
     @Test
     public void printAllWords() {
-        // TODO
-    	//listOfWords.forEach(s -> System.out.println(s));
+        
     	listOfWords.forEach(System.out::println);
     	
     	assert(true);
@@ -124,13 +124,15 @@ public class ExerciseLambda {
      * Find the first square that is divisible by five
      */
     @Test
-    public void findFirstSquareThatIsDivisibleBy5() {
+    public void findFirstSquareRootThatIsDivisibleBy5() {
         // HINT: IntStream.range(1, 100) creates a stream 1, 2, ... 99
-        // final int first = 0; // TODO
-    	//Long first = IntStream.range(1, 100).formapToLong(s -);
+        
+    	int first =  IntStream.range(1, 100).filter(s -> Math.sqrt(s)%5==0).findFirst().getAsInt();
     	
     	
-    	fail();
+    	System.out.println("First:" + first);
+    	assertEquals(25, first);
+    	
     }
     
     /*
@@ -176,8 +178,10 @@ public class ExerciseLambda {
 	    	}
 	    );
 	    
-	    // TODO assertEquals("a1b2c3", sb.toString());
-	    fail();
+	    System.out.println(sb);
+	    
+	    assertEquals("a1b2c3", sb.toString());
+
   }
 
 	/**
@@ -187,6 +191,12 @@ public class ExerciseLambda {
 	public void printNumbersFromNewThread() {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 		// TODO Thread t;
-		fail();
+		
+		Runnable task = () -> {
+			list.forEach(s -> System.out.println(Thread.currentThread().getName() + ":" + s));
+        };
+        
+        new Thread(task).start();
+		
 	}
 }	
