@@ -55,10 +55,8 @@ public class ExerciseLambda {
 	public void stringOfFirstLetterFromEveryWord() {
 		
 		StringBuilder sb = new StringBuilder();
-		
-		List<Character> list = listOfWords.stream().map(s -> s.charAt(0)).collect(Collectors.toList());
-		
-		list.forEach(s -> sb.append(s));
+		 
+		listOfWords.stream().map(s -> s.charAt(0)).collect(Collectors.toList()).forEach(s -> sb.append(s));		
 		
 		String result = sb.toString();
 		
@@ -129,7 +127,6 @@ public class ExerciseLambda {
         
     	int first =  IntStream.range(1, 100).filter(s -> Math.sqrt(s)%5==0).findFirst().getAsInt();
     	
-    	
     	System.out.println("First:" + first);
     	assertEquals(25, first);
     	
@@ -146,8 +143,6 @@ public class ExerciseLambda {
     			"The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog");
 
     	String merged;
-    	
-    	StringBuilder sb = new StringBuilder();
     	
     	merged = list.stream().skip(1).limit(3).collect(Collectors.joining("-"));
     	
@@ -173,8 +168,7 @@ public class ExerciseLambda {
 	    StringBuilder sb = new StringBuilder();
 	    
 	    map.forEach((k,v) -> {
-	    	sb.append(k);
-	    	sb.append(v);	    	
+	    	sb.append(k + v);	    	
 	    	}
 	    );
 	    
@@ -190,7 +184,6 @@ public class ExerciseLambda {
 	@Test
 	public void printNumbersFromNewThread() {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-		// TODO Thread t;
 		
 		Runnable task = () -> {
 			list.forEach(s -> System.out.println(Thread.currentThread().getName() + ":" + s));
