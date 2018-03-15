@@ -1,11 +1,17 @@
 package exercise;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalInt;
 import java.util.TreeMap;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.Test;		
 
@@ -35,8 +41,10 @@ public class ExerciseLambda {
 	 */
     @Test
     public void printAllWords() {
-        // TODO
-    	fail();
+        
+    	listOfWords.forEach(System.out::println);
+    	
+    	assert(true);
     }
     
     /*
@@ -45,25 +53,32 @@ public class ExerciseLambda {
 	 */
 	@Test
 	public void stringOfFirstLetterFromEveryWord() {
-		// String result;
-		// TODO assertEquals("epicscbsbaaloietmloi", result);
-		fail();
+		
+		StringBuilder sb = new StringBuilder();
+		 
+		listOfWords.stream().map(s -> s.charAt(0)).collect(Collectors.toList()).forEach(s -> sb.append(s));		
+		
+		String result = sb.toString();
+		
+		assertEquals("epicscbsbaaloietmloi", result);
+		
+		System.out.println("Result:" + result);
+
 	}
     
     // Exercise 2: Convert all words in wordList to upper case
     @Test
     public void makeUpperCase() {
-        
-        // TODO
-    	/*
+     	List<String> output = listOfWords.stream().map(String::toUpperCase).collect(Collectors.toList());
+    	
+    	System.out.println(output);
+    	
     	assertEquals( Arrays.asList(
                 "EVERY", "PROBLEM", "IN", "COMPUTER", "SCIENCE",
                 "CAN", "BE", "SOLVED", "BY", "ADDING", "ANOTHER",
                 "LEVEL", "OF", "INDIRECTION", "EXCEPT", "TOO",
                 "MANY", "LEVELS", "OF", "INDIRECTION"), output );
-        */
-        fail();
-    
+    	    
     }
     
     /*
@@ -71,8 +86,13 @@ public class ExerciseLambda {
      */
     @Test
     public void findEvenLengthWords() {
-        // TODO assertEquals(Arrays.asList("in", "computer", "be", "solved", "by", "adding", "of", "except", "many", "levels", "of"), output);
-    	fail();
+    	
+    	List<String> output = listOfWords.stream().filter(s -> s.length()%2==0).collect(Collectors.toList());
+    	
+    	System.out.println(output);
+    	    	
+        assertEquals(Arrays.asList("in", "computer", "be", "solved", "by", "adding", "of", "except", "many", "levels", "of"), output);
+
     }
 
     /*
@@ -80,8 +100,10 @@ public class ExerciseLambda {
      */
     @Test
     public void countNumberOfWords() {
-        // TODO assertEquals(20, count);
-    	fail();
+
+    	long count = listOfWords.stream().count();	
+        assertEquals(20, count);
+    	
     }
 
     /*
@@ -89,21 +111,25 @@ public class ExerciseLambda {
      */
     @Test
     public void countNumberOfCharactersInWords() {
-        // TODO assertEquals(105, count);
-    	fail();
+ 
+    	long count = 0L;
+    	count = listOfWords.stream().mapToLong(s -> s.length()).sum();
+    	System.out.println(count);
+    	assertEquals(105, count);
     }
 
     /*
      * Find the first square that is divisible by five
      */
     @Test
-    public void findFirstSquareThatIsDivisibleBy5() {
+    public void findFirstSquareRootThatIsDivisibleBy5() {
         // HINT: IntStream.range(1, 100) creates a stream 1, 2, ... 99
-        // final int first = 0; // TODO
-
-
-        // TODO assertEquals(25, first);
-    	fail();
+        
+    	int first =  IntStream.range(1, 100).filter(s -> Math.sqrt(s)%5==0).findFirst().getAsInt();
+    	
+    	System.out.println("First:" + first);
+    	assertEquals(25, first);
+    	
     }
     
     /*
@@ -117,8 +143,13 @@ public class ExerciseLambda {
     			"The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog");
 
     	String merged;
-    	// TODO assertEquals("quick-brown-fox", merged);
-    	fail();
+    	
+    	merged = list.stream().skip(1).limit(3).collect(Collectors.joining("-"));
+    	
+    	assertEquals("quick-brown-fox", merged);
+    	
+    	System.out.println(merged);
+
     }
     
     
@@ -134,8 +165,17 @@ public class ExerciseLambda {
 	    map.put("b", 2);
 	    map.put("a", 1);
 	    
-	    // TODO assertEquals("a1b2c3", sb.toString());
-	    fail();
+	    StringBuilder sb = new StringBuilder();
+	    
+	    map.forEach((k,v) -> {
+	    	sb.append(k + v);	    	
+	    	}
+	    );
+	    
+	    System.out.println(sb);
+	    
+	    assertEquals("a1b2c3", sb.toString());
+
   }
 
 	/**
@@ -144,7 +184,12 @@ public class ExerciseLambda {
 	@Test
 	public void printNumbersFromNewThread() {
 		List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-		// TODO Thread t;
-		fail();
+		
+		Runnable task = () -> {
+			list.forEach(s -> System.out.println(Thread.currentThread().getName() + ":" + s));
+        };
+        
+        new Thread(task).start();
+		
 	}
 }	
